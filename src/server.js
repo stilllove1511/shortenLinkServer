@@ -2,6 +2,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 
 import initAppRoutes from './routes/api'
+// const { connection } = require('./config/connectDB')
 
 require('dotenv').config()
 
@@ -13,6 +14,7 @@ const PORT = process.env.PORT || 8080
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
+// connection()
 
 initAppRoutes(app)
 

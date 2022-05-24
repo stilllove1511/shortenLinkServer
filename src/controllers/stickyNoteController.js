@@ -18,8 +18,8 @@ const updateNote = (req, res) => {
 
 }
 
-const deleteNOte = (req, res) => {
+const deleteNote = (req, res) => {
 
 }
 
-export { testNote, createNote, getNote, updateNote, deleteNOte }
+export { testNote, createNote, getNote, updateNote, deleteNote }
