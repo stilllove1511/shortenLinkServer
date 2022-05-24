@@ -1,11 +1,12 @@
 import express from "express";
 
-import { testNote, createNote, getNote, updateNote, deleteNote } from '../controllers/stickyNoteController'
+import { testNote, createNote, readNote, updateNote, deleteNote } from '../controllers/stickyNoteController'
 
 const router = express.Router()
 
 const initAppRoutes = (app) => {
     router.get('/test', testNote)
+    router.get('/note/read', readNote)
     router.post('/note/create', createNote)
     router.put('/note/update', updateNote)
     router.delete('/note/delete', deleteNote)
