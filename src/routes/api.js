@@ -7,7 +7,7 @@ import { checkUserJWT } from "../middlewares/JWTAction";
 const router = express.Router()
 
 const initAppRoutes = (app) => {
-    // router.all('*', checkUserJWT)
+    router.all('*', checkUserJWT)
 
     router.post('/register', logController.handleRegister)
     router.post('/login', logController.handleLogin)
