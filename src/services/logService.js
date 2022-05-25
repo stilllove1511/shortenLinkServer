@@ -77,6 +77,7 @@ const handelUserLogin = async (rawData) => {
             let isCorrectPassword = checkPassword(rawData.password, user.password)
             if (isCorrectPassword) {
                 let payload = {
+                    id: user.id,
                     username: user.username,
                 }
                 let token = createJWT(payload)

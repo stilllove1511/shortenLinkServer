@@ -36,6 +36,8 @@ const handleLogin = async (req, res) => {
         if (data && data.DT && data.DT.access_token) {
             res.cookie('jwt', data.DT.access_token, { httpOnly: false, maxAge: 3600 * 1000 })
         }
+
+        console.log('access_token: ', data.DT.access_token)
         return res.status(200).json({
             EM: data.EM, //error message
             EC: data.EC,//error code

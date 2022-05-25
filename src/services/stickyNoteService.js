@@ -2,7 +2,7 @@ import db from '../models/index'
 
 const createNote = async (data) => {
     try {
-        let user = await db.Note.create({ ...data })
+        let user = await db.Note.create({ ...data });
         if (user) return {
             EM: 'create note success',
             EC: 0,
@@ -18,10 +18,12 @@ const createNote = async (data) => {
     }
 }
 
-const readNote = async () => {
+const readNote = async (userId) => {
     let notes = await db.Note.findAll({
         attributes: ["id", "title", "content"],
-        include: { model: db.User, attributes: ["username"] },
+        where: {
+            userId
+        }
     })
     if (notes) {
         return {
@@ -40,6 +42,20 @@ const readNote = async () => {
 
 const updateNote = async (data) => {
     try {
+        let note = await db.Note.findOne(
+            {
+                where: {
+                    id: data.id
+                }
+            }
+        )
+
+        if (note.userId !== data.userId)
+            return {
+                EM: 'you do not have permission to perfrom this action',
+                EC: -2,
+                DT: []
+            }
 
         await db.Note.update(
             {
@@ -64,12 +80,24 @@ const updateNote = async (data) => {
     }
 }
 
-const deleteNote = async (id) => {
+const deleteNote = async (ids) => {
     try {
+
         let note = await db.Note.findOne({
-            where: { id }
+            where: { id: ids.id }
         })
+
+
+
         if (note) {
+
+            if (note.userId !== ids.userId)
+                return {
+                    EM: 'you do not have permission to perfrom this action',
+                    EC: -2,
+                    DT: []
+                }
+
             await note.destroy()
             return {
                 EM: 'Deleted',
