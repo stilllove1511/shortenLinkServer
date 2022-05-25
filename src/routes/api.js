@@ -1,15 +1,21 @@
 import express from "express";
 
-import { testNote, createNote, readNote, updateNote, deleteNote } from '../controllers/stickyNoteController'
+import logController from "../controllers/logController";
+import stickyNoteController from '../controllers/stickyNoteController'
+import { checkUserJWT } from "../middlewares/JWTAction";
 
 const router = express.Router()
 
 const initAppRoutes = (app) => {
-    router.get('/test', testNote)
-    router.get('/note/read', readNote)
-    router.post('/note/create', createNote)
-    router.put('/note/update', updateNote)
-    router.delete('/note/delete', deleteNote)
+    // router.all('*', checkUserJWT)
+
+    router.post('/register', logController.handleRegister)
+    router.post('/login', logController.handleLogin)
+
+    router.get('/note/read', stickyNoteController.readNote)
+    router.post('/note/create', stickyNoteController.createNote)
+    router.put('/note/update', stickyNoteController.updateNote)
+    router.delete('/note/delete', stickyNoteController.deleteNote)
 
     return app.use('/api/v1/', router)
 }

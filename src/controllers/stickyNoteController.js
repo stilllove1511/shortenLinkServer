@@ -82,4 +82,4 @@ const deleteNote = async (req, res) => {
     }
 }
 
-export { testNote, createNote, readNote, updateNote, deleteNote }
+export default { testNote, createNote, readNote, updateNote, deleteNote }
