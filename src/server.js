@@ -2,14 +2,17 @@ import express from 'express'
 import bodyParser from 'body-parser'
 
 import initAppRoutes from './routes/api'
+const { configCors } = require('./config/cors')
 // const { connection } = require('./config/connectDB')
 
 require('dotenv').config()
 
 const app = express()
 
-const hostname = 'localhost'
+const hostname = process.env.HOST_NAME
 const PORT = process.env.PORT || 8080
+
+configCors(app)
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -17,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // connection()
 
 initAppRoutes(app)
+
 
 app.use((req, res) => {
     return res.send('404 not found')
