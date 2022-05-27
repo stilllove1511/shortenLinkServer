@@ -1,5 +1,5 @@
 {
-  "name": "stickynotebe",
+  "name": "CRUDBE",
   "version": "1.0.0",
   "description": "",
   "main": "src/server.js",
@@ -11,7 +11,7 @@
     "build": "npm run clean && npm run build-babel",
     "production": "npm run build && node ./build/src/server.js"
   },
-  "author": "stilllove00",
+  "author": "ungnc1511",
   "license": "ISC",
   "dependencies": {
     "@babel/runtime": "^7.18.0",
