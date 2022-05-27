@@ -11,7 +11,7 @@
     "build": "npm run clean && npm run build-babel",
     "production": "npm run build && node ./build/src/server.js"
   },
-  "author": "ungnc1511",
+  "author": "me",
   "license": "ISC",
   "dependencies": {
     "@babel/runtime": "^7.18.0",
