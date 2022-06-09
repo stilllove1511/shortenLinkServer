@@ -19,13 +19,7 @@ const testNote = (req, res) => {
 const createNote = async (req, res) => {
 
     try {
-        let cookies = req.cookies
-        let tokenFromHeader = extractToken(req)
-        let token = cookies && cookies.jwt ? cookies.jwt : tokenFromHeader
-        let decoded = verifyToken(token)
-        console.log(decoded)
-        let userId = decoded.id
-        let data = await stickyNoteService.createNote({ ...req.body, userId: userId })
+        let data = await stickyNoteService.createNote({ ...req.body, userId: req.user.id })
 
         return res.status(200).json({
             EM: data.EM, //error message
@@ -44,13 +38,7 @@ const createNote = async (req, res) => {
 
 const readNote = async (req, res) => {
     try {
-        let cookies = req.cookies
-        let tokenFromHeader = extractToken(req)
-        let token = cookies && cookies.jwt ? cookies.jwt : tokenFromHeader
-        let decoded = verifyToken(token)
-        console.log(decoded)
-        let userId = decoded.id
-        let data = await stickyNoteService.readNote(userId)
+        let data = await stickyNoteService.readNote(req.user.id)
 
         return res.status(200).json({
             EM: data.EM, //error message
@@ -69,14 +57,7 @@ const readNote = async (req, res) => {
 
 const updateNote = async (req, res) => {
     try {
-        let cookies = req.cookies
-        let tokenFromHeader = extractToken(req)
-        let token = cookies && cookies.jwt ? cookies.jwt : tokenFromHeader
-        let decoded = verifyToken(token)
-        console.log(decoded)
-        let userId = decoded.id
-
-        let data = await stickyNoteService.updateNote({ ...req.body, userId: userId })
+        let data = await stickyNoteService.updateNote({ ...req.body, userId: req.user.id })
         return res.status(200).json({
             EM: data.EM, //error message
             EC: data.EC,//error code
@@ -95,12 +76,7 @@ const updateNote = async (req, res) => {
 
 const deleteNote = async (req, res) => {
     try {
-        let cookies = req.cookies
-        let tokenFromHeader = extractToken(req)
-        let token = cookies && cookies.jwt ? cookies.jwt : tokenFromHeader
-        let decoded = verifyToken(token)
-        console.log(decoded)
-        let userId = decoded.id
+        let userId = req.user.id
         let noteId = req.body.id
 
         let data = await stickyNoteService.deleteNote({ id: noteId, userId: userId })
