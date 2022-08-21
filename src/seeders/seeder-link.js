@@ -20,6 +20,24 @@ module.exports = {
                     shortenLink: "ggle",
                     userId: 1,
                 },
+                {
+                    title: "youtube",
+                    originLink: "https://youtube.com",
+                    shortenLink: "ytb",
+                    userId: 1,
+                },
+                {
+                    title: "instagram",
+                    originLink: "https://instagram.com",
+                    shortenLink: "ins",
+                    userId: 2,
+                },
+                {
+                    title: "zalo",
+                    originLink: "https://zalo.me",
+                    shortenLink: "zl",
+                    userId: 2,
+                },
             ],
             {}
         );
