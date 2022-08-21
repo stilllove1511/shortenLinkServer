@@ -1,4 +1,4 @@
-import stickyLinkService from '../services/stickyLinkService'
+import linkService from '../services/linkService'
 import { verifyToken } from '../middlewares/JWTAction'
 
 const extractToken = (req) => {
@@ -19,7 +19,7 @@ const testLink = (req, res) => {
 const createLink = async (req, res) => {
 
     try {
-        let data = await stickyLinkService.createLink({ ...req.body, userId: req.user.id })
+        let data = await linkService.createLink({ ...req.body, userId: req.user.id })
 
         return res.status(200).json({
             EM: data.EM, //error message
@@ -38,7 +38,7 @@ const createLink = async (req, res) => {
 
 const readLink = async (req, res) => {
     try {
-        let data = await stickyLinkService.readLink(req.user.id)
+        let data = await linkService.readLink(req.user.id)
 
         return res.status(200).json({
             EM: data.EM, //error message
@@ -57,7 +57,7 @@ const readLink = async (req, res) => {
 
 const updateLink = async (req, res) => {
     try {
-        let data = await stickyLinkService.updateLink({ ...req.body, userId: req.user.id })
+        let data = await linkService.updateLink({ ...req.body, userId: req.user.id })
         return res.status(200).json({
             EM: data.EM, //error message
             EC: data.EC,//error code
@@ -79,7 +79,7 @@ const deleteLink = async (req, res) => {
         let userId = req.user.id
         let linkId = req.body.id
 
-        let data = await stickyLinkService.deleteLink({ id: linkId, userId: userId })
+        let data = await linkService.deleteLink({ id: linkId, userId: userId })
         return res.status(200).json({
             EM: data.EM,
             EC: data.EC,
