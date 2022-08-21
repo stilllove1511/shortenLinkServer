@@ -1,7 +1,7 @@
 import express from "express";
 
 import logController from "../controllers/logController";
-import stickyNoteController from '../controllers/stickyNoteController'
+import stickyLinkController from '../controllers/stickyLinkController'
 import { checkUserJWT } from "../middlewares/JWTAction";
 
 const router = express.Router()
@@ -12,10 +12,10 @@ const initAppRoutes = (app) => {
     router.post('/register', logController.handleRegister)
     router.post('/login', logController.handleLogin)
 
-    router.get('/note/read', stickyNoteController.readNote)
-    router.post('/note/create', stickyNoteController.createNote)
-    router.put('/note/update', stickyNoteController.updateNote)
-    router.delete('/note/delete', stickyNoteController.deleteNote)
+    router.get('/link/read', stickyLinkController.readLink)
+    router.post('/link/create', stickyLinkController.createLink)
+    router.put('/link/update', stickyLinkController.updateLink)
+    router.delete('/link/delete', stickyLinkController.deleteLink)
 
     return app.use('/api/v1/', router)
 }

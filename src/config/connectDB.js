@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize";
 
 // Option 3: Passing parameters separately (other dialects)
-const sequelize = new Sequelize('sticky_note', 'root', null, {
+const sequelize = new Sequelize('shorten_link', 'root', null, {
     host: 'localhost',
     dialect: 'mysql'
 });

@@ -1,10 +1,10 @@
 import db from '../models/index'
 
-const createNote = async (data) => {
+const createLink = async (data) => {
     try {
-        let user = await db.Note.create({ ...data });
+        let user = await db.Link.create({ ...data });
         if (user) return {
-            EM: 'create note success',
+            EM: 'create link success',
             EC: 0,
             DT: []
         }
@@ -18,18 +18,18 @@ const createNote = async (data) => {
     }
 }
 
-const readNote = async (userId) => {
-    let notes = await db.Note.findAll({
-        attributes: ["id", "title", "content"],
+const readLink = async (userId) => {
+    let links = await db.Link.findAll({
+        attributes: ["id", "title", "originLink","shortenLink"],
         where: {
             userId
         }
     })
-    if (notes) {
+    if (links) {
         return {
             EM: 'get data succes',
             EC: 0,
-            DT: notes
+            DT: links
         }
     } else {
         return {
@@ -40,9 +40,9 @@ const readNote = async (userId) => {
     }
 }
 
-const updateNote = async (data) => {
+const updateLink = async (data) => {
     try {
-        let note = await db.Note.findOne(
+        let link = await db.Link.findOne(
             {
                 where: {
                     id: data.id
@@ -50,14 +50,14 @@ const updateNote = async (data) => {
             }
         )
 
-        if (note.userId !== data.userId)
+        if (link.userId !== data.userId)
             return {
                 EM: 'you do not have permission to perfrom this action',
                 EC: -2,
                 DT: []
             }
 
-        await db.Note.update(
+        await db.Link.update(
             {
                 ...data
             },
@@ -80,25 +80,25 @@ const updateNote = async (data) => {
     }
 }
 
-const deleteNote = async (ids) => {
+const deleteLink = async (ids) => {
     try {
 
-        let note = await db.Note.findOne({
+        let link = await db.Link.findOne({
             where: { id: ids.id }
         })
 
 
 
-        if (note) {
+        if (link) {
 
-            if (note.userId !== ids.userId)
+            if (link.userId !== ids.userId)
                 return {
                     EM: 'you do not have permission to perfrom this action',
                     EC: -2,
                     DT: []
                 }
 
-            await note.destroy()
+            await link.destroy()
             return {
                 EM: 'Deleted',
                 EC: 0,
@@ -106,7 +106,7 @@ const deleteNote = async (ids) => {
             }
         } else {
             return {
-                EM: 'Note does not exist',
+                EM: 'Link does not exist',
                 EC: 2,
                 DT: []
             }
@@ -121,4 +121,4 @@ const deleteNote = async (ids) => {
     }
 }
 
-export default { createNote, readNote, updateNote, deleteNote }
+export default { createLink, readLink, updateLink, deleteLink }

@@ -1,4 +1,4 @@
-import stickyNoteService from '../services/stickyNoteService'
+import stickyLinkService from '../services/stickyLinkService'
 import { verifyToken } from '../middlewares/JWTAction'
 
 const extractToken = (req) => {
@@ -8,18 +8,18 @@ const extractToken = (req) => {
     return null
 }
 
-const testNote = (req, res) => {
+const testLink = (req, res) => {
     res.status(200).json({
-        EM: 'sticky note test api ok',
+        EM: 'sticky link test api ok',
         EC: 0,
         DT: ''
     })
 }
 
-const createNote = async (req, res) => {
+const createLink = async (req, res) => {
 
     try {
-        let data = await stickyNoteService.createNote({ ...req.body, userId: req.user.id })
+        let data = await stickyLinkService.createLink({ ...req.body, userId: req.user.id })
 
         return res.status(200).json({
             EM: data.EM, //error message
@@ -36,9 +36,9 @@ const createNote = async (req, res) => {
     }
 }
 
-const readNote = async (req, res) => {
+const readLink = async (req, res) => {
     try {
-        let data = await stickyNoteService.readNote(req.user.id)
+        let data = await stickyLinkService.readLink(req.user.id)
 
         return res.status(200).json({
             EM: data.EM, //error message
@@ -55,9 +55,9 @@ const readNote = async (req, res) => {
     }
 }
 
-const updateNote = async (req, res) => {
+const updateLink = async (req, res) => {
     try {
-        let data = await stickyNoteService.updateNote({ ...req.body, userId: req.user.id })
+        let data = await stickyLinkService.updateLink({ ...req.body, userId: req.user.id })
         return res.status(200).json({
             EM: data.EM, //error message
             EC: data.EC,//error code
@@ -74,12 +74,12 @@ const updateNote = async (req, res) => {
     }
 }
 
-const deleteNote = async (req, res) => {
+const deleteLink = async (req, res) => {
     try {
         let userId = req.user.id
-        let noteId = req.body.id
+        let linkId = req.body.id
 
-        let data = await stickyNoteService.deleteNote({ id: noteId, userId: userId })
+        let data = await stickyLinkService.deleteLink({ id: linkId, userId: userId })
         return res.status(200).json({
             EM: data.EM,
             EC: data.EC,
@@ -95,4 +95,4 @@ const deleteNote = async (req, res) => {
     }
 }
 
-export default { testNote, createNote, readNote, updateNote, deleteNote }
+export default { testLink, createLink, readLink, updateLink, deleteLink }
