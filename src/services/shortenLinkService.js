@@ -9,10 +9,9 @@ const findOriginLink = async (slug) => {
             attributes: ["originLink"],
         });
         console.log(link);
-        // if (link) {
-        //     return link.originLink;
-        // }
-        return "https://google.com";
+        if (link) {
+            return link.originLink;
+        }
     } catch (error) {
         console.log(error);
         return {
