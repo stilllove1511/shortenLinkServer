@@ -6,11 +6,13 @@ const findOriginLink = async (slug) => {
             where: {
                 shortenLink: slug,
             },
+            attributes: ["originLink"],
         });
-
-        if (link) {
-            return link.originLink;
-        }
+        console.log(link);
+        // if (link) {
+        //     return link.originLink;
+        // }
+        return "https://google.com";
     } catch (error) {
         console.log(error);
         return {

@@ -2,7 +2,7 @@ import linkService from "../services/linkService";
 
 const testLink = (req, res) => {
     res.status(200).json({
-        EM: "sticky link test api ok",
+        EM: "link test api ok",
         EC: 0,
         DT: "",
     });

@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 
 import initAppRoutes from "./routes/index";
 const { configCors } = require("./config/cors");
-// const { connection } = require('./config/connectDB')
+// const { connection } = require("./config/connectDB");
 require("dotenv").config();
 
 const app = express();
@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// connection()
+// connection();
 
 initAppRoutes(app);
 
