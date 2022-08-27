@@ -24,7 +24,11 @@ const updatePassword = async (req, res) => {
 };
 
 const getUserInfor = (req, res) => {
-    res.status(200).json(req.user);
+    res.status(200).json({
+        EM: "get user infor succesfully!!",
+        EC: 0,
+        DT: req.user,
+    });
 };
 
 export default { updatePassword, getUserInfor };
