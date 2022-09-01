@@ -1,8 +1,8 @@
 require("dotenv").config()
 
 const configCors = (app) => {
-    if (req.headers.origin) {
-        app.use(function (req, res, next) {
+    app.use(function (req, res, next) {
+        if (req.headers.origin) {
             // Website you wish to allow to connect
             res.setHeader("Access-Control-Allow-Origin", req.headers.origin)
 
@@ -27,12 +27,7 @@ const configCors = (app) => {
             }
             // Pass to next layer of middleware
             next()
-        })
-    } else {
-        app.use(function (req, res, next) {
-            // Website you wish to allow to connect
-            res.setHeader("Access-Control-Allow-Origin", req.headers.origin)
-
+        } else {
             // Request methods you wish to allow
             res.setHeader(
                 "Access-Control-Allow-Methods",
@@ -54,8 +49,8 @@ const configCors = (app) => {
             }
             // Pass to next layer of middleware
             next()
-        })
-    }
+        }
+    })
 }
 module.exports = {
     configCors,
