@@ -16,16 +16,17 @@ const PORT = process.env.PORT || 8080
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
-app.use(
-    cors({
-        origin: ["http://localhost:3000", process.env.REACT_URL],
-        credentials: true,
-        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-        preflightContinue: false,
-        optionsSuccessStatus: 200,
-    })
-)
+// app.use(
+//     cors({
+//         origin: ["http://localhost:3000", process.env.REACT_URL],
+//         credentials: true,
+//         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//         preflightContinue: false,
+//         optionsSuccessStatus: 200,
+//     })
+// )
 // connection()
+configCors(app)
 
 initAppRoutes(app)
 
