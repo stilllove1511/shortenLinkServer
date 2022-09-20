@@ -1,4 +1,5 @@
 import logService from "../services/logService"
+import jwt from "jsonwebtoken"
 
 const handleRegister = async (req, res) => {
     try {
@@ -7,7 +8,7 @@ const handleRegister = async (req, res) => {
             return res.status(200).json({
                 EM: "MIssing required parameters", //error message
                 EC: "1", //error code
-                DT: "", //data
+                DT: "" //data
             })
         }
 
@@ -17,14 +18,14 @@ const handleRegister = async (req, res) => {
         return res.status(200).json({
             EM: data.EM,
             EC: data.EC,
-            DT: "",
+            DT: ""
         })
     } catch (e) {
         console.log(e)
         return res.status(500).json({
             EM: "error fom server",
             EC: "-1",
-            DT: "",
+            DT: ""
         })
     }
 }
@@ -38,6 +39,7 @@ const handleLogin = async (req, res) => {
                 httpOnly: false,
                 sameSite: "None",
                 secure: true,
+                maxAge: 3600 * 24
             })
         }
 
@@ -45,18 +47,42 @@ const handleLogin = async (req, res) => {
         return res.status(200).json({
             EM: data.EM, //error message
             EC: data.EC, //error code
-            DT: data.DT, //data
+            DT: data.DT //data
         })
     } catch (error) {
         console.log(error)
         return res.status(500).json({
             EM: "error from server",
             EC: "-1",
-            DT: "",
+            DT: ""
         })
     }
 }
+
+const handleLoginGG = async (req, res) => {
+    try {
+        let data = await logService.handelUserLoginGG({
+            username: req.user.emails[0].value
+        })
+        res.cookie("jwt", data.DT.access_token, {
+            httpOnly: false,
+            sameSite: "None",
+            secure: true,
+            maxAge: 3600 * 24
+        })
+        res.redirect(process.env.REACT_URL)
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            EM: "error from server",
+            EC: "-1",
+            DT: ""
+        })
+    }
+}
+
 export default {
     handleRegister,
     handleLogin,
+    handleLoginGG
 }
