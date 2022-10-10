@@ -39,7 +39,7 @@ const handleLogin = async (req, res) => {
                 httpOnly: false,
                 sameSite: "None",
                 secure: true,
-                maxAge: 3600 * 24
+                expires: new Date(Date.now() + 900000)
             })
         }
 
@@ -68,7 +68,7 @@ const handleLoginGG = async (req, res) => {
             httpOnly: false,
             sameSite: "None",
             secure: true,
-            maxAge: 3600 * 24
+            expires: new Date(Date.now() + 900000)
         })
         res.redirect(process.env.REACT_URL)
     } catch (error) {
