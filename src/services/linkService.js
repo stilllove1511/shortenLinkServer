@@ -1,4 +1,5 @@
 import db from "../models/index"
+import { sha256 } from "js-sha256"
 
 const isUniqueLink = async (slug) => {
     let link = await db.Link.findOne({
@@ -8,7 +9,7 @@ const isUniqueLink = async (slug) => {
     return true
 }
 
-const createLink = async (data) => {
+const createCustomLink = async (data) => {
     try {
         let check = await isUniqueLink(data.shortenLink)
         if (check) {
@@ -26,6 +27,28 @@ const createLink = async (data) => {
                 DT: [],
             }
         }
+    } catch (error) {
+        console.log(error)
+        return {
+            EM: "something wrong in service ...",
+            EC: 1,
+            DT: [],
+        }
+    }
+}
+
+const createLink = async (data) => {
+    try {
+        console.log()
+        let backHalf = sha256(data.originLink).substring(0, 7)
+        data.shortenLink = backHalf
+        let user = await db.Link.create({ ...data })
+        if (user)
+            return {
+                EM: "create link success",
+                EC: 0,
+                DT: [],
+            }
     } catch (error) {
         console.log(error)
         return {
@@ -177,4 +200,11 @@ const deleteLink = async (ids) => {
     }
 }
 
-export default { createLink, readLink, readAllLink, updateLink, deleteLink }
+export default {
+    createLink,
+    createCustomLink,
+    readLink,
+    readAllLink,
+    updateLink,
+    deleteLink,
+}

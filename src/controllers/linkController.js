@@ -8,6 +8,28 @@ const testLink = (req, res) => {
     })
 }
 
+const createCustomLink = async (req, res) => {
+    try {
+        let data = await linkService.createLink({
+            ...req.body,
+            userId: req.user.id,
+        })
+
+        return res.status(200).json({
+            EM: data.EM, //error message
+            EC: data.EC, //error code
+            DT: data.DT, //data
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            EM: "error from server",
+            EC: "-1",
+            DT: "",
+        })
+    }
+}
+
 const createLink = async (req, res) => {
     try {
         let data = await linkService.createLink({
@@ -112,6 +134,7 @@ const deleteLink = async (req, res) => {
 
 export default {
     testLink,
+    createCustomLink,
     createLink,
     readLink,
     readAllLink,
