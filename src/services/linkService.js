@@ -1,9 +1,10 @@
 import db from "../models/index"
 import { sha256 } from "js-sha256"
+import mongo from "../mongo/conn"
 
 const isUniqueLink = async (slug) => {
     let link = await db.Link.findOne({
-        where: { shortenLink: slug },
+        where: { alias: slug },
     })
     if (link) return false
     return true
@@ -11,15 +12,16 @@ const isUniqueLink = async (slug) => {
 
 const createCustomLink = async (data) => {
     try {
-        let check = await isUniqueLink(data.shortenLink)
+        let check = await isUniqueLink(data.alias)
         if (check) {
-            let user = await db.Link.create({ ...data })
-            if (user)
-                return {
-                    EM: "create link success",
-                    EC: 0,
-                    DT: [],
-                }
+            let link = await db.Link.create({ ...data })
+            data.title = undefined
+            await mongo.Link.create({ ...data, SQLDBId: link.id })
+            return {
+                EM: "create link success",
+                EC: 0,
+                DT: [],
+            }
         } else {
             return {
                 EM: "link have been already existed",
@@ -40,15 +42,20 @@ const createCustomLink = async (data) => {
 const createLink = async (data) => {
     try {
         console.log()
-        let backHalf = sha256(data.originLink).substring(0, 7)
-        data.shortenLink = backHalf
-        let user = await db.Link.create({ ...data })
-        if (user)
-            return {
-                EM: "create link success",
-                EC: 0,
-                DT: [],
-            }
+        let alias = sha256(`${data.username}${data.originalLink}`).substring(
+            0,
+            7
+        )
+
+        data.alias = alias
+        let link = await db.Link.create({ ...data })
+        data.title = undefined
+        await mongo.Link.create({ ...data, SQLDBId: link.id })
+        return {
+            EM: "create link success",
+            EC: 0,
+            DT: [],
+        }
     } catch (error) {
         console.log(error)
         return {
@@ -116,12 +123,22 @@ const updateLink = async (data) => {
             }
 
         if (link.shortenLink === data.shortenLink) {
+            //upadte in sqldb
+
             await db.Link.update(
                 {
                     ...data,
                 },
                 {
                     where: { id: data.id },
+                }
+            )
+            //upadte in mongo
+            await mongo.Link.updateOne(
+                { SQLDBId: data.id },
+                {
+                    ...data,
+                    id: undefined,
                 }
             )
             return {
@@ -178,6 +195,10 @@ const deleteLink = async (ids) => {
                 }
 
             await link.destroy()
+
+            await mongo.Link.deleteOne({
+                SQLDBId: link.id,
+            })
             return {
                 EM: "Deleted",
                 EC: 0,

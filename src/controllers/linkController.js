@@ -1,16 +1,8 @@
 import linkService from "../services/linkService"
 
-const testLink = (req, res) => {
-    res.status(200).json({
-        EM: "link test api ok",
-        EC: 0,
-        DT: "",
-    })
-}
-
 const createCustomLink = async (req, res) => {
     try {
-        let data = await linkService.createLink({
+        let data = await linkService.createCustomLink({
             ...req.body,
             userId: req.user.id,
         })
@@ -35,6 +27,7 @@ const createLink = async (req, res) => {
         let data = await linkService.createLink({
             ...req.body,
             userId: req.user.id,
+            username: req.user.username,
         })
 
         return res.status(200).json({
@@ -133,7 +126,6 @@ const deleteLink = async (req, res) => {
 }
 
 export default {
-    testLink,
     createCustomLink,
     createLink,
     readLink,
