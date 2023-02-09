@@ -1,6 +1,9 @@
 import db from "../models/index"
-import { sha256 } from "js-sha256"
 import mongo from "../mongo/conn"
+
+function generateHash(username, originalLink) {
+    return btoa(username + originalLink)
+}
 
 const isUniqueLink = async (slug) => {
     let link = await db.Link.findOne({
@@ -41,13 +44,11 @@ const createCustomLink = async (data) => {
 
 const createLink = async (data) => {
     try {
-        console.log()
-        let alias = sha256(`${data.username}${data.originalLink}`).substring(
+        data.alias = generateHash(data.username, data.originalLink).substring(
             0,
             7
         )
 
-        data.alias = alias
         let link = await db.Link.create({ ...data })
         data.title = undefined
         await mongo.Link.create({ ...data, SQLDBId: link.id })
