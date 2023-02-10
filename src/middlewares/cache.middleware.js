@@ -35,11 +35,17 @@ export const checkCacheLink = async (req, res, next) => {
 }
 
 export const cacheLink = (req, res) => {
+    let key = req.params.slug
     redis.set(
-        req.params.slug,
+        key,
         JSON.stringify({
             originalLink: req.originalLink,
             expiration: req.expiration.toString(),
         })
     )
+}
+
+export const delCache = (req, res) => {
+    let key = req.linkAlias
+    redis.del(key)
 }

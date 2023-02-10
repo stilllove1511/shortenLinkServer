@@ -8,7 +8,6 @@ const redirect = async (req, res, next) => {
             res.redirect(originalLink.originalLink) //redirect
             req.originalLink = originalLink.originalLink
             req.expiration = originalLink.expiration
-            req.SQLDBId = originalLink.SQLDBId
             next() //to cache middleware
         } else {
             return res.send("404 not found") //if not find link, send 404

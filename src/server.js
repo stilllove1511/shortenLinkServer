@@ -1,7 +1,9 @@
 import express from "express"
 import bodyParser from "body-parser"
 import initAppRoutes from "./routes/index"
+import redis from "./redis"
 const { configCors } = require("./config/cors")
+
 require("dotenv").config()
 const app = express()
 const cookieParser = require("cookie-parser")
@@ -34,7 +36,13 @@ passport.deserializeUser(function (user, cb) {
 configCors(app)
 
 initAppRoutes(app)
-
+;(async function () {
+    try {
+        await redis.connect()
+    } catch (error) {
+        console.log(error)
+    }
+})()
 app.use((req, res) => {
     return res.send("404 not found")
 })

@@ -114,23 +114,18 @@ const updateLink = async (data) => {
             },
         })
 
+        //check permission
         if (link.userId !== data.userId)
             return {
                 EM: "you do not have permission to perfrom this action",
                 EC: -2,
             }
-
+        // check link is unique to increase performance
         if (link.shortenLink === data.shortenLink) {
             //upadte in sqldb
-
-            let link = await db.Link.update(
-                {
-                    ...data,
-                },
-                {
-                    where: { id: data.id },
-                }
-            )
+            //update in sql
+            link.set({ ...data })
+            await link.save()
             //upadte in mongo
             await mongo.Link.updateOne(
                 { SQLDBId: data.id },
@@ -143,21 +138,17 @@ const updateLink = async (data) => {
             return {
                 EM: "update ok",
                 EC: 0,
+                DT: link,
             }
         } else {
             let check = await isUniqueLink(data.shortenLink)
             if (check) {
-                await db.Link.update(
-                    {
-                        ...data,
-                    },
-                    {
-                        where: { id: data.id },
-                    }
-                )
+                link.set({ ...data })
+                await link.save()
                 return {
                     EM: "update ok",
                     EC: 0,
+                    DT: link,
                 }
             } else {
                 return {
@@ -196,6 +187,7 @@ const deleteLink = async (ids) => {
             return {
                 EM: "Deleted",
                 EC: 0,
+                DT: link,
             }
         } else {
             return {

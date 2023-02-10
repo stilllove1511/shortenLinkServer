@@ -83,17 +83,21 @@ const readAllLink = async (req, res) => {
     }
 }
 
-const updateLink = async (req, res) => {
+const updateLink = async (req, res, next) => {
     try {
         let data = await linkService.updateLink({
             ...req.body,
+            ...req.params,
             userId: req.user.id,
         })
-        return res.status(200).json({
+        res.status(200).json({
             EM: data.EM, //error message
             EC: data.EC, //error code
-            DT: data.DT, //data
+            DT: data.DT || null, //data
         })
+
+        req.linkAlias = data.DT.alias || null
+        next() //to cache middleware
     } catch (error) {
         console.log(error)
         return res.status(500).json({
@@ -104,17 +108,20 @@ const updateLink = async (req, res) => {
     }
 }
 
-const deleteLink = async (req, res) => {
+const deleteLink = async (req, res, next) => {
     try {
         let userId = req.user.id
-        let linkId = req.body.id
+        let linkId = req.params.id
 
         let data = await linkService.deleteLink({ id: linkId, userId: userId })
-        return res.status(200).json({
+        res.status(200).json({
             EM: data.EM,
             EC: data.EC,
-            DR: data.DT,
+            DT: data.DT || null,
         })
+
+        req.linkAlias = data.DT.alias || null
+        next() //to cache middleware
     } catch (error) {
         console.log(error)
         return res.status(500).json({
