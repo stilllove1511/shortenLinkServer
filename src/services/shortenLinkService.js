@@ -1,25 +1,25 @@
-import db from "../models/index";
+import mongo from "../mongo/conn";
 
-const findOriginLink = async (slug) => {
+const findOriginalLink = async (slug) => {
     try {
-        let link = await db.Link.findOne({
-            where: {
-                shortenLink: slug,
+        let now = new Date();
+        let link = await mongo.Link.findOne({
+            alias: slug,
+            expiration: {
+                $gt: now,
             },
-            attributes: ["originLink"],
         });
-        console.log(link);
+        //check if link have not been expired
         if (link) {
-            return link.originLink;
+            return link;
+        } else {
+            return null;
         }
     } catch (error) {
-        console.log(error);
-        return {
-            EM: "some thing wrong in service ...",
-            EC: 1,
-            DT: [],
-        };
+        if (error.message !== `Cannot read property 'expiration' of null`)
+            console.log(error);
+        return null;
     }
 };
 
-export default { findOriginLink };
+export default { findOriginalLink };

@@ -5,7 +5,8 @@
     "main": "src/server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "nodemon --exec ./node_modules/.bin/babel-node ./src/server.js",
+        "s1": "nodemon --exec ./node_modules/.bin/babel-node ./src/server.js",
+        "s2": "nodemon --exec ./node_modules/.bin/babel-node ./src/redirectorServer.js",
         "clean": "rm -rf build && mkdir build",
         "build-babel": "babel ./src -d ./build/src",
         "build": "npm run clean && npm run build-babel",
@@ -35,6 +36,7 @@
         "passport": "^0.6.0",
         "passport-google-oauth": "^2.0.0",
         "pg": "^8.8.0",
+        "redis": "^4.6.4",
         "sequelize": "^6.20.0",
         "sequelize-cli": "^6.4.1"
     }
