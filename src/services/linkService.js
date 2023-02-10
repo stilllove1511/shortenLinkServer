@@ -123,7 +123,7 @@ const updateLink = async (data) => {
         if (link.shortenLink === data.shortenLink) {
             //upadte in sqldb
 
-            await db.Link.update(
+            let link = await db.Link.update(
                 {
                     ...data,
                 },
@@ -137,6 +137,7 @@ const updateLink = async (data) => {
                 {
                     ...data,
                     id: undefined,
+                    expiration: link.expiration,
                 }
             )
             return {

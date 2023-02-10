@@ -1,25 +1,37 @@
-import mongo from "../mongo/conn";
+import db from "../models"
+import mongo from "../mongo/conn"
+const Sequelize = require("sequelize")
 
 const findOriginalLink = async (slug) => {
     try {
-        let now = new Date();
+        let now = new Date()
         let link = await mongo.Link.findOne({
             alias: slug,
             expiration: {
                 $gt: now,
             },
-        });
+        })
         //check if link have not been expired
         if (link) {
-            return link;
+            db.Link.update(
+                {
+                    timeVisited: Sequelize.literal("timeVisited + 1"),
+                },
+                {
+                    where: {
+                        id: link.SQLDBId,
+                    },
+                }
+            )
+            return link
         } else {
-            return null;
+            return null
         }
     } catch (error) {
         if (error.message !== `Cannot read property 'expiration' of null`)
-            console.log(error);
-        return null;
+            console.log(error)
+        return null
     }
-};
+}
 
-export default { findOriginalLink };
+export default { findOriginalLink }
