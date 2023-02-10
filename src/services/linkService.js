@@ -19,17 +19,19 @@ const createCustomLink = async (data) => {
         if (check) {
             let link = await db.Link.create({ ...data })
             data.title = undefined
-            await mongo.Link.create({ ...data, SQLDBId: link.id })
+            await mongo.Link.create({
+                ...data,
+                expiration: link.expiration,
+                SQLDBId: link.id,
+            })
             return {
                 EM: "create link success",
                 EC: 0,
-                DT: [],
             }
         } else {
             return {
                 EM: "link have been already existed",
                 EC: 1,
-                DT: [],
             }
         }
     } catch (error) {
@@ -55,14 +57,12 @@ const createLink = async (data) => {
         return {
             EM: "create link success",
             EC: 0,
-            DT: [],
         }
     } catch (error) {
         console.log(error)
         return {
             EM: "something wrong in service ...",
             EC: 1,
-            DT: [],
         }
     }
 }
@@ -84,7 +84,6 @@ const readLink = async (userId) => {
         return {
             EM: "some thing wrong in service ...",
             EC: 1,
-            DT: [],
         }
     }
 }
@@ -103,7 +102,6 @@ const readAllLink = async () => {
         return {
             EM: "some thing wrong in service ...",
             EC: 1,
-            DT: [],
         }
     }
 }
@@ -120,7 +118,6 @@ const updateLink = async (data) => {
             return {
                 EM: "you do not have permission to perfrom this action",
                 EC: -2,
-                DT: [],
             }
 
         if (link.shortenLink === data.shortenLink) {
@@ -145,7 +142,6 @@ const updateLink = async (data) => {
             return {
                 EM: "update ok",
                 EC: 0,
-                DT: [],
             }
         } else {
             let check = await isUniqueLink(data.shortenLink)
@@ -161,13 +157,11 @@ const updateLink = async (data) => {
                 return {
                     EM: "update ok",
                     EC: 0,
-                    DT: [],
                 }
             } else {
                 return {
                     EM: "link is same as another",
                     EC: 1,
-                    DT: [],
                 }
             }
         }
@@ -176,7 +170,6 @@ const updateLink = async (data) => {
         return {
             EM: "some thing wrong in service ...",
             EC: 1,
-            DT: [],
         }
     }
 }
@@ -192,7 +185,6 @@ const deleteLink = async (ids) => {
                 return {
                     EM: "you do not have permission to perfrom this action",
                     EC: -2,
-                    DT: [],
                 }
 
             await link.destroy()
@@ -203,13 +195,11 @@ const deleteLink = async (ids) => {
             return {
                 EM: "Deleted",
                 EC: 0,
-                DT: [],
             }
         } else {
             return {
                 EM: "Link does not exist",
                 EC: 2,
-                DT: [],
             }
         }
     } catch (error) {
@@ -217,7 +207,6 @@ const deleteLink = async (ids) => {
         return {
             EM: "error from service",
             EC: 1,
-            DT: [],
         }
     }
 }

@@ -18,12 +18,13 @@ module.exports = (sequelize, DataTypes) => {
             originalLink: DataTypes.TEXT,
             alias: DataTypes.TEXT,
             userId: DataTypes.INTEGER,
-            // expiration: {
-            //     type: DataTypes.DATE,
-            //     defaultValue: sequelize.literal(
-            //         "CURRENT_TIMESTAMP + INTERVAL 1 MONTH"
-            //     ),
-            // },
+            timeVisited: { type: DataTypes.INTEGER, defaultValue: 0 },
+            expiration: {
+                type: DataTypes.DATE,
+                defaultValue: sequelize.literal(
+                    "CURRENT_TIMESTAMP + INTERVAL 1 MONTH"
+                ),
+            },
         },
         {
             sequelize,

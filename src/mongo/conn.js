@@ -11,12 +11,7 @@ export default {
             title: String,
             originalLink: String,
             alias: String,
-            expiration: {
-                type: Date,
-                default: function () {
-                    return new Date(Date.now() + 24 * 60 * 60 * 1000)
-                },
-            },
+            expiration: Date,
         })
     ),
 }

@@ -4,6 +4,6 @@ module.exports = {
         await queryInterface.renameColumn("Link", "originLink", "originalLink")
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropColumn("Link", "expiration")
+        await queryInterface.renameColumn("Link", "originalLink", "originLink")
     },
 }
