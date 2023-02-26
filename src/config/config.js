@@ -1,9 +1,9 @@
-{
+module.exports= {
     "development": {
         "username": "root",
-        "password": "",
+        "password": null,
         "database": "shorten_link",
-        "host": "127.0.0.1",
+        "host": process.env.DB_HOST||'localhost',
         "dialect": "mysql",
         "logging": false,
         "define": {

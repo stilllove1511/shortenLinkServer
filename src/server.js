@@ -36,13 +36,13 @@ passport.deserializeUser(function (user, cb) {
 configCors(app)
 
 initAppRoutes(app)
-;(async function () {
-    try {
-        await redis.connect()
-    } catch (error) {
-        console.log(error)
-    }
-})()
+// ;(async function () {
+//     try {
+//         await redis.connect()
+//     } catch (error) {
+//         console.log(error)
+//     }
+// })()
 app.use((req, res) => {
     return res.send("404 not found")
 })

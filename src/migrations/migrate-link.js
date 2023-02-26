@@ -11,14 +11,22 @@ module.exports = {
             title: {
                 type: Sequelize.STRING,
             },
-            originLink: {
+            originalLink: {
                 type: Sequelize.TEXT,
             },
-            shortenLink: {
+            alias: {
                 type: Sequelize.TEXT,
             },
             userId: {
                 type: Sequelize.INTEGER,
+            },
+            expiration:{
+                type: Sequelize.DATE,
+                allowNull: true,
+            },
+            timeVisited:{
+                type: Sequelize.INTEGER,
+                allowNull: true,
             },
             createdAt: {
                 allowNull: true,

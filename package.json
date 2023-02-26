@@ -10,7 +10,7 @@
         "clean": "rm -rf build && mkdir build",
         "build-babel": "babel ./src -d ./build/src",
         "build": "npm run clean && npm run build-babel",
-        "production": "npm run build && node ./build/src/server.js"
+        "production": "node ./build/src/server.js"
     },
     "author": "me",
     "license": "ISC",

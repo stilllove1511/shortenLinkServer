@@ -69,7 +69,7 @@ const createLink = async (data) => {
 
 const readLink = async (userId) => {
     let links = await db.Link.findAll({
-        attributes: ["id", "title", "originLink", "shortenLink"],
+        attributes: ["id", "title", "originalLink", "alias"],
         where: {
             userId,
         },
