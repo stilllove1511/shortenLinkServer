@@ -1,14 +1,10 @@
 module.exports= {
     "development": {
-        "username": "root",
-        "password": null,
+        "username": "postgres",
+        "password": "1",
         "database": "shorten_link",
         "host": process.env.DB_HOST||'localhost',
-        "dialect": "mysql",
-        "logging": false,
-        "define": {
-            "freezeTableName": true
-        }
+        "dialect": "postgres"
     },
     "test": {
         "username": "root",
@@ -23,9 +19,6 @@ module.exports= {
         "database": "onbrxfqj",
         "host": "tiny.db.elephantsql.com",
         "dialect": "postgres",
-        "logging": false,
-        "define": {
-            "freezeTableName": true
-        }
+        "logging": false
     }
 }

@@ -9,18 +9,18 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            User.hasMany(models.Link, { as: "Link", foreignKey: "userId" });
+            User.hasMany(models.Link, {foreignKey: "userId" });
         }
     }
     User.init(
         {
             username: DataTypes.STRING,
             password: DataTypes.STRING,
-            groupId: DataTypes.INTEGER,
         },
         {
             sequelize,
             modelName: "User",
+            tableName:"users"
         }
     );
     return User;

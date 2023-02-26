@@ -14,21 +14,19 @@ module.exports = (sequelize, DataTypes) => {
     }
     Link.init(
         {
-            title: DataTypes.STRING,
+            title: { type: DataTypes.STRING, allowNull: true },
             originalLink: DataTypes.TEXT,
             alias: DataTypes.TEXT,
-            userId: DataTypes.INTEGER,
             timeVisited: { type: DataTypes.INTEGER, defaultValue: 0 },
             expiration: {
                 type: DataTypes.DATE,
-                defaultValue: sequelize.literal(
-                    "CURRENT_TIMESTAMP + INTERVAL 1 MONTH"
-                ),
+                defaultValue: (new Date()).getDate()+30
             },
         },
         {
             sequelize,
             modelName: "Link",
+            tableName: "links",
         }
     )
     return Link
