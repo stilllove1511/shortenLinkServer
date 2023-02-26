@@ -6,6 +6,7 @@ import linkController from "../controllers/linkController"
 const linkRouter = express.Router()
 
 linkRouter.get("/", checkUserJWT, linkController.readLink)
+linkRouter.get("/visit/:id", linkController.visitLink)
 linkRouter.post("/create", checkUserJWT, linkController.createLink)
 linkRouter.post("/custom-create", checkUserJWT, linkController.createCustomLink)
 linkRouter.put("/update/:id", checkUserJWT, linkController.updateLink, delCache)

@@ -19,8 +19,7 @@ module.exports = (sequelize, DataTypes) => {
             alias: DataTypes.TEXT,
             timeVisited: { type: DataTypes.INTEGER, defaultValue: 0 },
             expiration: {
-                type: DataTypes.DATE,
-                defaultValue: (new Date()).getDate()+30
+                type: DataTypes.DATE
             },
         },
         {

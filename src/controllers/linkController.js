@@ -132,6 +132,22 @@ const deleteLink = async (req, res, next) => {
     }
 }
 
+const visitLink = async (req, res) => {
+    try {
+        await linkService.visitLink(req.params.id)
+        res.json({
+            EC: 0,
+            EM: "ok",
+        })
+    } catch (error) {
+        console.log(error)
+        res.json({
+            EC: 1,
+            EM: "server error",
+        })
+    }
+}
+
 export default {
     createCustomLink,
     createLink,
@@ -139,4 +155,5 @@ export default {
     readAllLink,
     updateLink,
     deleteLink,
+    visitLink,
 }

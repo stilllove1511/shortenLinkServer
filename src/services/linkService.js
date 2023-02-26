@@ -17,6 +17,8 @@ const createCustomLink = async (data) => {
     try {
         let check = await isUniqueLink(data.alias)
         if (check) {
+            let now = new Date()
+            data.expiration = now.setDate(now.getDate() + 30)
             let link = await db.Link.create({ ...data })
             data.title = undefined
             await mongo.Link.create({
@@ -50,7 +52,8 @@ const createLink = async (data) => {
             0,
             7
         )
-
+        let now = new Date()
+        data.expiration = now.setDate(now.getDate() + 30)
         let link = await db.Link.create({ ...data })
         data.title = undefined
         await mongo.Link.create({ ...data, SQLDBId: link.id })
@@ -204,6 +207,25 @@ const deleteLink = async (ids) => {
     }
 }
 
+const visitLink = async (id) => {
+    try {
+        await db.Link.increment(
+            {
+                timeVisited: 1,
+            },
+            {
+                where: {
+                    id
+                },
+            }
+        )
+        return true
+    } catch (error) {
+        console.log(error)
+        return false
+    }
+}
+
 export default {
     createLink,
     createCustomLink,
@@ -211,4 +233,5 @@ export default {
     readAllLink,
     updateLink,
     deleteLink,
+    visitLink,
 }
