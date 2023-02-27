@@ -17,7 +17,6 @@ const redirect = async (req, res, next) => {
         return res.status(500).json({
             EM: "error fom server",
             EC: "-1",
-            DT: "",
         })
     }
 }

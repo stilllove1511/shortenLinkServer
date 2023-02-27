@@ -21,7 +21,6 @@ const updatePassword = async (userData) => {
         return {
             EM: "update password successfully!",
             EC: 0,
-            DT: "",
         };
     } catch (error) {
         console.log(error);

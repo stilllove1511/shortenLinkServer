@@ -1,5 +1,5 @@
 import db from "../models/index"
-import mongo from "../mongo/conn"
+import mongo from "../mongo/index"
 
 function generateHash(username, originalLink) {
     return btoa(username + originalLink)

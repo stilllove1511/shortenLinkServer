@@ -1,8 +1,6 @@
-require("dotenv").config()
-const { cookie } = require("express/lib/response")
-const jwt = require("jsonwebtoken")
+import jwt from "jsonwebtoken"
 
-const nonSecurePaths = ["/", "/login", "/register"]
+// const nonSecurePaths = ["/", "/login", "/register"]
 
 const createJWT = (payload) => {
     let key = process.env.JWT_SECRET
@@ -41,12 +39,12 @@ const extractToken = (req) => {
 }
 
 const checkUserJWT = (req, res, next) => {
-    if (nonSecurePaths.includes(req.path)) return next()
+    // if (nonSecurePaths.includes(req.path)) return next()
 
     let cookies = req.cookies
     let tokenFromHeader = extractToken(req)
 
-    // console.log('>>> check cookies: ', cookies.jwt)
+    console.log('>>> check cookies: ', cookies.jwt)
     // console.log('>>> check bearer token: ', tokenFromHeader)
 
     if ((cookies && cookies.jwt) || tokenFromHeader) {

@@ -7,7 +7,6 @@ const handleRegister = async (req, res) => {
             return res.status(200).json({
                 EM: "MIssing required parameters", //error message
                 EC: "1", //error code
-                DT: "", //data
             })
         }
 
@@ -17,14 +16,12 @@ const handleRegister = async (req, res) => {
         return res.status(200).json({
             EM: data.EM,
             EC: data.EC,
-            DT: "",
         })
     } catch (e) {
         console.log(e)
         return res.status(500).json({
             EM: "error fom server",
             EC: "-1",
-            DT: "",
         })
     }
 }
@@ -53,7 +50,6 @@ const handleLogin = async (req, res) => {
         return res.status(500).json({
             EM: "error from server",
             EC: "-1",
-            DT: "",
         })
     }
 }
@@ -75,7 +71,6 @@ const handleLoginGG = async (req, res) => {
         return res.status(500).json({
             EM: "error from server",
             EC: "-1",
-            DT: "",
         })
     }
 }

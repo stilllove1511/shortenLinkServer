@@ -17,7 +17,6 @@ const createCustomLink = async (req, res) => {
         return res.status(500).json({
             EM: "error from server",
             EC: "-1",
-            DT: "",
         })
     }
 }
@@ -40,7 +39,6 @@ const createLink = async (req, res) => {
         return res.status(500).json({
             EM: "error from server",
             EC: "-1",
-            DT: "",
         })
     }
 }
@@ -59,7 +57,6 @@ const readLink = async (req, res) => {
         return res.status(500).json({
             EM: "error from server",
             EC: "-1",
-            DT: "",
         })
     }
 }
@@ -78,7 +75,6 @@ const readAllLink = async (req, res) => {
         return res.status(500).json({
             EM: "error from server",
             EC: "-1",
-            DT: "",
         })
     }
 }
@@ -103,7 +99,6 @@ const updateLink = async (req, res, next) => {
         return res.status(500).json({
             EM: "error from server",
             EC: "-1",
-            DT: "",
         })
     }
 }
@@ -127,7 +122,6 @@ const deleteLink = async (req, res, next) => {
         return res.status(500).json({
             EM: "error from server",
             EC: "-1",
-            DT: "",
         })
     }
 }

@@ -12,23 +12,21 @@ module.exports = {
          * }], {});
          */
         await queryInterface.bulkInsert(
-            "User",
+            "users",
             [
                 {
                     username: "user1",
                     password:
                         "$2a$10$PsbfONDoBN/moJstrnkheO0Sf6.nO1dlNCO1XzbrfaBtsS63Ct60.", //q
-                    groupId: 1,
-                    createdAt: "2000-01-01 00:00:00.000000",
-                    updatedAt: "2000-01-01 00:00:00.000000",
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
                 },
                 {
                     username: "user2",
                     password:
                         "$2a$10$PsbfONDoBN/moJstrnkheO0Sf6.nO1dlNCO1XzbrfaBtsS63Ct60.", //q
-                    groupId: 1,
-                    createdAt: "2000-01-01 00:00:00.000000",
-                    updatedAt: "2000-01-01 00:00:00.000000",
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
                 },
             ],
             {}

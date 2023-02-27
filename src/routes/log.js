@@ -1,10 +1,9 @@
 import express from "express"
 import logController from "../controllers/logController"
-require("dotenv").config()
 const passport = require("passport")
-const logRouter = express.Router()
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy
 
+const logRouter = express.Router()
 passport.use(
     new GoogleStrategy(
         {

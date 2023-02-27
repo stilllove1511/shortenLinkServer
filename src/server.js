@@ -1,15 +1,16 @@
 import express from "express"
 import bodyParser from "body-parser"
 import initAppRoutes from "./routes/index"
-import redis from "./redis"
-const { configCors } = require("./config/cors")
+import { connectRedis } from "./redis"
+import { connectMongo } from "./mongo"
+import { configCors } from "./config/cors"
+import cookieParser from "cookie-parser"
+import session from "express-session"
+const passport = require("passport")
 
 require("dotenv").config()
 const app = express()
-const cookieParser = require("cookie-parser")
 const PORT = process.env.PORT || 8080
-var passport = require("passport")
-var session = require("express-session")
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -33,16 +34,17 @@ passport.deserializeUser(function (user, cb) {
         return cb(null, user)
     })
 })
+
 configCors(app)
 
 initAppRoutes(app)
-// ;(async function () {
-//     try {
-//         await redis.connect()
-//     } catch (error) {
-//         console.log(error)
-//     }
-// })()
+
+//connect mongo
+connectMongo()
+
+//connect redis
+connectRedis()
+
 app.use((req, res) => {
     return res.send("404 not found")
 })

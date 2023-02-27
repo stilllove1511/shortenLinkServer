@@ -1,8 +1,14 @@
-import { createClient } from "redis";
+import { createClient } from "redis"
 
-const redis = createClient({
-    host: "localhost",
-    port: "6397",
-});
+const redis = createClient()
 
-export default redis;
+export const connectRedis = async () => {
+    try {
+        await redis.connect()
+        // console.log("connect redis succesfully")
+    } catch (error) {
+        console.log("connect redis fail")
+        // console.log(error)
+    }
+}
+export default redis

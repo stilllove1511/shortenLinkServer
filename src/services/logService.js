@@ -1,8 +1,6 @@
-require("dotenv").config()
-
-const db = require("../models/index")
-const bcrypt = require("bcryptjs")
-const { Op } = require("sequelize")
+import db from "../models/index"
+import bcrypt from "bcryptjs"
+import { Op } from "sequelize"
 import { createJWT } from "../middlewares/JWTAction"
 
 const salt = bcrypt.genSaltSync(10)
@@ -14,7 +12,7 @@ const hashUserPassword = (userPassword) => {
 
 const checkUsernameExist = async (username) => {
     let user = await db.User.findOne({
-        where: { username: username }
+        where: { username: username },
     })
 
     if (user) {
@@ -31,7 +29,7 @@ const registerNewUser = async (rawUserData) => {
         if (isUsernameExist) {
             return {
                 EM: "the username is already exist",
-                EC: 1
+                EC: 1,
             }
         }
 
@@ -41,18 +39,18 @@ const registerNewUser = async (rawUserData) => {
         //create new user
         await db.User.create({
             username: rawUserData.username,
-            password: hashPassword
+            password: hashPassword,
         })
 
         return {
             EM: "A user is created successfully",
-            EC: 0
+            EC: 0,
         }
     } catch (e) {
         console.log(e)
         return {
             EM: "something wrongs in service...",
-            EC: -2
+            EC: -2,
         }
     }
 }
@@ -65,8 +63,8 @@ const handelUserLogin = async (rawData) => {
     try {
         let user = await db.User.findOne({
             where: {
-                [Op.or]: [{ username: rawData.username }]
-            }
+                [Op.or]: [{ username: rawData.username }],
+            },
         })
         if (user) {
             console.log(">>> found uer with usrename")
@@ -77,7 +75,7 @@ const handelUserLogin = async (rawData) => {
             if (isCorrectPassword) {
                 let payload = {
                     id: user.id,
-                    username: user.username
+                    username: user.username,
                 }
                 let token = createJWT(payload)
                 return {
@@ -85,8 +83,8 @@ const handelUserLogin = async (rawData) => {
                     EC: 0,
                     DT: {
                         access_token: token,
-                        username: user.username
-                    }
+                        username: user.username,
+                    },
                 }
             }
         }
@@ -100,13 +98,13 @@ const handelUserLogin = async (rawData) => {
         return {
             EM: "your username or password is not correct",
             EC: 1,
-            DT: ""
+            DT: "",
         }
     } catch (error) {
         console.log(error)
         return {
             EM: "something wrongs in service...",
-            EC: -2
+            EC: -2,
         }
     }
 }
@@ -115,13 +113,13 @@ const handelUserLoginGG = async (rawData) => {
     try {
         let user = await db.User.findOne({
             where: {
-                [Op.or]: [{ username: rawData.username }]
-            }
+                [Op.or]: [{ username: rawData.username }],
+            },
         })
         if (user) {
             let payload = {
                 id: user.id,
-                username: user.username
+                username: user.username,
             }
             let token = createJWT(payload)
             return {
@@ -129,15 +127,15 @@ const handelUserLoginGG = async (rawData) => {
                 EC: 0,
                 DT: {
                     access_token: token,
-                    username: user.username
-                }
+                    username: user.username,
+                },
             }
         } else {
             await db.User.create({
-                username: rawData.username
+                username: rawData.username,
             })
             let payload = {
-                username: rawData.username
+                username: rawData.username,
             }
             let token = createJWT(payload)
             return {
@@ -145,15 +143,15 @@ const handelUserLoginGG = async (rawData) => {
                 EC: 0,
                 DT: {
                     access_token: token,
-                    username: rawData.username
-                }
+                    username: rawData.username,
+                },
             }
         }
     } catch (error) {
         console.log(error)
         return {
             EM: "something wrongs in service...",
-            EC: -2
+            EC: -2,
         }
     }
 }
@@ -161,5 +159,5 @@ const handelUserLoginGG = async (rawData) => {
 export default {
     registerNewUser,
     handelUserLogin,
-    handelUserLoginGG
+    handelUserLoginGG,
 }

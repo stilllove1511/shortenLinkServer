@@ -9,6 +9,7 @@ module.exports = {
                 type: Sequelize.INTEGER,
             },
             username: {
+                allowNull: false,
                 type: Sequelize.STRING,
             },
             password: {
@@ -43,6 +44,7 @@ module.exports = {
             },
             userId: {
                 type: Sequelize.INTEGER,
+                allowNull: false,
                 references: {
                     model: "users",
                     key: "id",
@@ -50,14 +52,8 @@ module.exports = {
                 onUpdate: "CASCADE",
                 onDelete: "CASCADE",
             },
-            expiration: {
-                type: Sequelize.DATE,
-                allowNull: true,
-            },
-            timeVisited: {
-                type: Sequelize.INTEGER,
-                allowNull: true,
-            },
+            expiration: Sequelize.DATE,
+            timeVisited: Sequelize.INTEGER,
             createdAt: {
                 type: Sequelize.DATE,
                 allowNull: false,

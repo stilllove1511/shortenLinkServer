@@ -12,13 +12,13 @@ export const checkCacheLink = async (req, res, next) => {
             //check expired
             if (now < expiration) {
                 res.redirect(originalLink.originalLink)
-                db.Link.update(
+                db.Link.increment(
                     {
-                        timeVisited: Sequelize.literal("timeVisited + 1"),
+                        timeVisited: 1,
                     },
                     {
                         where: {
-                            originalLink: originalLink.originalLink,
+                            id
                         },
                     }
                 )
