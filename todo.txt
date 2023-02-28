@@ -1,2 +1,1 @@
-config bable and modify package.json
-separate jwtAction
+need to timeout redis
