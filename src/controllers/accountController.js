@@ -2,7 +2,6 @@ import accountService from "../services/accountService"
 
 const updatePassword = async (req, res) => {
     try {
-        console.log(req.user)
         let data = await accountService.updatePassword({
             ...req.body,
             userId: req.user.id,
@@ -22,7 +21,6 @@ const updatePassword = async (req, res) => {
 }
 
 const getUserInfor = (req, res) => {
-    console.log("origin:", req.headers.origin)
     res.status(200).json({
         EM: "get user infor succesfully!!",
         EC: 0,

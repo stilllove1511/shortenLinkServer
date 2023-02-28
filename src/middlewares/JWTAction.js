@@ -23,7 +23,7 @@ const verifyToken = (token) => {
     try {
         decoded = jwt.verify(token, key)
     } catch (err) {
-        console.log("jwt err")
+        // console.log(err)
     }
     return decoded
 }
@@ -44,12 +44,9 @@ const checkUserJWT = (req, res, next) => {
     let cookies = req.cookies
     let tokenFromHeader = extractToken(req)
 
-    console.log('>>> check cookies: ', cookies.jwt)
-    // console.log('>>> check bearer token: ', tokenFromHeader)
 
     if ((cookies && cookies.jwt) || tokenFromHeader) {
         let token = cookies && cookies.jwt ? cookies.jwt : tokenFromHeader
-        // console.log('>>> check token: ', token)
 
         if (token) {
             let decoded = verifyToken(token)

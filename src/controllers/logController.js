@@ -39,7 +39,6 @@ const handleLogin = async (req, res) => {
             })
         }
 
-        console.log("access_token: ", data.DT.access_token)
         return res.status(200).json({
             EM: data.EM, //error message
             EC: data.EC, //error code

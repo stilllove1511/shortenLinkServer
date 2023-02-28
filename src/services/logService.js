@@ -67,7 +67,6 @@ const handelUserLogin = async (rawData) => {
             },
         })
         if (user) {
-            console.log(">>> found uer with usrename")
             let isCorrectPassword = checkPassword(
                 rawData.password,
                 user.password
@@ -88,12 +87,6 @@ const handelUserLogin = async (rawData) => {
                 }
             }
         }
-        console.log(
-            ">>> Input user with username: ",
-            rawData.username,
-            "password: ",
-            rawData.password
-        )
 
         return {
             EM: "your username or password is not correct",
