@@ -124,11 +124,12 @@ const handelUserLoginGG = async (rawData) => {
                 },
             }
         } else {
-            await db.User.create({
+            let newUser = await db.User.create({
                 username: rawData.username,
             })
             let payload = {
-                username: rawData.username,
+                id: newUser.id,
+                username: newUser.username,
             }
             let token = createJWT(payload)
             return {
