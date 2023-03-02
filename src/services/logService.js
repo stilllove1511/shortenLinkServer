@@ -66,7 +66,7 @@ const handelUserLogin = async (rawData) => {
                 [Op.or]: [{ username: rawData.username }],
             },
         })
-        if (user) {
+        if (user &&user.password) {
             let isCorrectPassword = checkPassword(
                 rawData.password,
                 user.password
