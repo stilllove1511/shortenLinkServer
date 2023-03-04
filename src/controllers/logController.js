@@ -34,7 +34,7 @@ const handleLogin = async (req, res) => {
             res.cookie("jwt", data.DT.access_token, {
                 httpOnly: false,
                 sameSite: "None",
-                secure: true,
+                // secure: true,
                 expires: new Date(Date.now() + 900000),
             })
         }
