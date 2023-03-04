@@ -33,7 +33,7 @@ const handleLogin = async (req, res) => {
         if (data && data.DT && data.DT.access_token) {
             res.cookie("jwt", data.DT.access_token, {
                 httpOnly: false,
-                sameSite: "None",
+                // sameSite: "None",
                 // secure: true,
                 expires: new Date(Date.now() + 900000),
             })
