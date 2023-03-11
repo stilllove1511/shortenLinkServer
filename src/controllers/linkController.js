@@ -93,7 +93,7 @@ const updateLink = async (req, res, next) => {
         })
 
         req.linkAlias = data.DT.alias || null
-        next() //to cache middleware
+        // next() //to cache middleware
     } catch (error) {
         console.log(error)
         return res.status(500).json({
@@ -116,7 +116,7 @@ const deleteLink = async (req, res, next) => {
         })
 
         req.linkAlias = data.DT.alias || null
-        next() //to cache middleware
+        // next() //to cache middleware
     } catch (error) {
         console.log(error)
         return res.status(500).json({

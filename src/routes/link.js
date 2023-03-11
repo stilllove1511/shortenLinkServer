@@ -2,6 +2,7 @@ import express from "express"
 import { checkUserJWT } from "../middlewares/JWTAction"
 import { delCache } from "../middlewares/cache.middleware"
 import linkController from "../controllers/linkController"
+import shortenLinkController from '../controllers/shortenLinkController'
 
 const linkRouter = express.Router()
 
@@ -16,5 +17,7 @@ linkRouter.delete(
     linkController.deleteLink,
     delCache
 )
+
+linkRouter.get("/redirect/:slug",shortenLinkController.redirect)
 
 export default linkRouter

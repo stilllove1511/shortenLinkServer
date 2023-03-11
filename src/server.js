@@ -43,7 +43,7 @@ initAppRoutes(app)
 connectMongo()
 
 //connect redis
-connectRedis()
+// connectRedis()
 
 app.use((req, res) => {
     return res.send("404 not found")
