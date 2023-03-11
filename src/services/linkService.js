@@ -19,13 +19,7 @@ const createCustomLink = async (data) => {
         if (check) {
             let now = new Date()
             data.expiration = now.setDate(now.getDate() + 30)
-            let link = await db.Link.create({ ...data })
-            data.title = undefined
-            await mongo.Link.create({
-                ...data,
-                expiration: link.expiration,
-                SQLDBId: link.id,
-            })
+            await db.Link.create({ ...data })
             return {
                 EM: "create link success",
                 EC: 0,
@@ -54,11 +48,9 @@ const createLink = async (data) => {
         )
         let now = new Date()
         data.expiration = now.setDate(now.getDate() + 30)
-        let link = await db.Link.create({ ...data })
-        data.title = undefined
-        await mongo.Link.create({ ...data, SQLDBId: link.id })
+        await db.Link.create({ ...data })
         return {
-            EM: "create link success",
+            EM: "success",
             EC: 0,
         }
     } catch (error) {
@@ -130,14 +122,14 @@ const updateLink = async (data) => {
             link.set({ ...data })
             await link.save()
             //upadte in mongo
-            await mongo.Link.updateOne(
-                { SQLDBId: data.id },
-                {
-                    ...data,
-                    id: undefined,
-                    expiration: link.expiration,
-                }
-            )
+            // await mongo.Link.updateOne(
+            //     { SQLDBId: data.id },
+            //     {
+            //         ...data,
+            //         id: undefined,
+            //         expiration: link.expiration,
+            //     }
+            // )
             return {
                 EM: "update ok",
                 EC: 0,
@@ -184,9 +176,9 @@ const deleteLink = async (ids) => {
 
             await link.destroy()
 
-            await mongo.Link.deleteOne({
-                SQLDBId: link.id,
-            })
+            // await mongo.Link.deleteOne({
+            //     SQLDBId: link.id,
+            // })
             return {
                 EM: "Deleted",
                 EC: 0,
