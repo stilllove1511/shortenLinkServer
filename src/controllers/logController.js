@@ -60,8 +60,8 @@ const handleLoginGG = async (req, res) => {
         })
         res.cookie("jwt", data.DT.access_token, {
             httpOnly: false,
-            sameSite: "None",
-            secure: true,
+            // sameSite: "None",
+            // secure: true,
             expires: new Date(Date.now() + 900000),
         })
         res.redirect(process.env.REACT_URL)
