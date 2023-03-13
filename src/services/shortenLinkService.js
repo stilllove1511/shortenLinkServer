@@ -1,4 +1,5 @@
 import db from "../models/index";
+const { Op } = require('sequelize')
 
 const findOriginalLink = async (slug) => {
     try {
@@ -7,7 +8,7 @@ const findOriginalLink = async (slug) => {
             where:{
                 alias: slug,
                 expiration: {
-                    $gt: now,
+                    [Op.gte]: now,
                 },
             }
         });
