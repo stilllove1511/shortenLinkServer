@@ -40,7 +40,7 @@ configCors(app)
 initAppRoutes(app)
 
 //connect mongo
-connectMongo()
+// connectMongo()
 
 //connect redis
 // connectRedis()

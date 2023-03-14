@@ -86,54 +86,64 @@ const readAllLink = async () => {
 
 const updateLink = async (data) => {
     try {
-        let link = await db.Link.findOne({
-            where: {
-                alias: data.alias,
-            },
-        })
+        let link = await db.Link.update(
+            { ...data },
+            {
+                where: {
+                    alias: data.oldAlias,
+                    userId: data.userId,
+                },
+            }
+        )
 
-        //check permission
-        if (link.userId !== data.userId)
-            return {
-                EM: "you do not have permission to perfrom this action",
-                EC: -2,
-            }
-        // check link is unique to increase performance
-        if (link.shortenLink === data.shortenLink) {
-            //upadte in sqldb
-            //update in sql
-            link.set({ ...data })
-            await link.save()
-            //upadte in mongo
-            // await mongo.Link.updateOne(
-            //     { SQLDBId: data.id },
-            //     {
-            //         ...data,
-            //         id: undefined,
-            //         expiration: link.expiration,
-            //     }
-            // )
-            return {
-                EM: "update ok",
-                EC: 0,
-                DT: link,
-            }
-        } else {
-            let check = await isUniqueLink(data.shortenLink)
-            if (check) {
-                link.set({ ...data })
-                await link.save()
-                return {
-                    EM: "update ok",
-                    EC: 0,
-                    DT: link,
-                }
-            } else {
-                return {
-                    EM: "link is same as another",
-                    EC: 1,
-                }
-            }
+        // //check permission
+        // if (link.userId !== data.userId)
+        //     return {
+        //         EM: "you do not have permission to perfrom this action",
+        //         EC: -2,
+        //     }
+        // // check link is unique to increase performance
+        // if (link.shortenLink === data.shortenLink) {
+        //     //upadte in sqldb
+        //     //update in sql
+        //     console.log(data)
+        //     link.set({ ...data })
+        //     await link.save()
+        //     //upadte in mongo
+        //     // await mongo.Link.updateOne(
+        //     //     { SQLDBId: data.id },
+        //     //     {
+        //     //         ...data,
+        //     //         id: undefined,
+        //     //         expiration: link.expiration,
+        //     //     }
+        //     // )
+        //     return {
+        //         EM: "update ok",
+        //         EC: 0,
+        //         DT: link,
+        //     }
+        // } else {
+        //     let check = await isUniqueLink(data.shortenLink)
+        //     if (check) {
+        //         link.set({ ...data })
+        //         await link.save()
+        //         return {
+        //             EM: "update ok",
+        //             EC: 0,
+        //             DT: link,
+        //         }
+        //     } else {
+        //         return {
+        //             EM: "link is same as another",
+        //             EC: 1,
+        //         }
+        //     }
+        // }
+        return {
+            EM: "update ok",
+            EC: 0,
+            DT: link,
         }
     } catch (error) {
         console.log(error)

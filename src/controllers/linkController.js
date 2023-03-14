@@ -82,8 +82,8 @@ const readAllLink = async (req, res) => {
 const updateLink = async (req, res, next) => {
     try {
         let data = await linkService.updateLink({
+            oldAlias:req.params.alias,
             ...req.body,
-            ...req.params,
             userId: req.user.id,
         })
         res.status(200).json({
