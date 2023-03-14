@@ -14,9 +14,12 @@ module.exports = (sequelize, DataTypes) => {
     }
     Link.init(
         {
+            alias: {
+                type: DataTypes.TEXT,
+                primaryKey: true,
+            },
             title: { type: DataTypes.STRING, allowNull: true },
             originalLink: DataTypes.TEXT,
-            alias: DataTypes.TEXT,
             timeVisited: { type: DataTypes.INTEGER, defaultValue: 0 },
             expiration: {
                 type: DataTypes.DATE

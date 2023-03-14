@@ -7,12 +7,12 @@ import shortenLinkController from '../controllers/shortenLinkController'
 const linkRouter = express.Router()
 
 linkRouter.get("/", checkUserJWT, linkController.readLink)
-linkRouter.get("/visit/:id", linkController.visitLink)
+linkRouter.get("/visit/:slug", linkController.visitLink)
 linkRouter.post("/create", checkUserJWT, linkController.createLink)
 linkRouter.post("/custom-create", checkUserJWT, linkController.createCustomLink)
-linkRouter.put("/update/:id", checkUserJWT, linkController.updateLink, delCache)
+linkRouter.put("/update/:alias", checkUserJWT, linkController.updateLink, delCache)
 linkRouter.delete(
-    "/delete/:id",
+    "/delete/:slug",
     checkUserJWT,
     linkController.deleteLink,
     delCache

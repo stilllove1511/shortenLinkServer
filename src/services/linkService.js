@@ -1,34 +1,17 @@
 import db from "../models/index"
-import mongo from "../mongo/index"
 
 function generateHash(username, originalLink) {
     return btoa(username + originalLink)
 }
 
-const isUniqueLink = async (slug) => {
-    let link = await db.Link.findOne({
-        where: { alias: slug },
-    })
-    if (link) return false
-    return true
-}
-
 const createCustomLink = async (data) => {
     try {
-        let check = await isUniqueLink(data.alias)
-        if (check) {
-            let now = new Date()
-            data.expiration = now.setDate(now.getDate() + 30)
-            await db.Link.create({ ...data })
-            return {
-                EM: "create link success",
-                EC: 0,
-            }
-        } else {
-            return {
-                EM: "link have been already existed",
-                EC: 1,
-            }
+        let now = new Date()
+        data.expiration = now.setDate(now.getDate() + 30)
+        await db.Link.create({ ...data })
+        return {
+            EM: "create link success",
+            EC: 0,
         }
     } catch (error) {
         console.log(error)
@@ -64,7 +47,7 @@ const createLink = async (data) => {
 
 const readLink = async (userId) => {
     let links = await db.Link.findAll({
-        attributes: ["id", "title", "originalLink", "alias"],
+        attributes: ["title", "originalLink", "alias"],
         where: {
             userId,
         },
@@ -85,7 +68,7 @@ const readLink = async (userId) => {
 
 const readAllLink = async () => {
     let links = await db.Link.findAll({
-        attributes: ["id", "title", "originLink", "shortenLink"],
+        attributes: ["title", "originLink", "alias"],
     })
     if (links) {
         return {
@@ -105,7 +88,7 @@ const updateLink = async (data) => {
     try {
         let link = await db.Link.findOne({
             where: {
-                id: data.id,
+                alias: data.alias,
             },
         })
 
@@ -161,14 +144,14 @@ const updateLink = async (data) => {
     }
 }
 
-const deleteLink = async (ids) => {
+const deleteLink = async ({ userId, alias }) => {
     try {
         let link = await db.Link.findOne({
-            where: { id: ids.id },
+            where: { alias },
         })
 
         if (link) {
-            if (link.userId !== ids.userId)
+            if (link.userId !== userId)
                 return {
                     EM: "you do not have permission to perfrom this action",
                     EC: -2,
@@ -199,7 +182,7 @@ const deleteLink = async (ids) => {
     }
 }
 
-const visitLink = async (id) => {
+const visitLink = async (alias) => {
     try {
         await db.Link.increment(
             {
@@ -207,7 +190,7 @@ const visitLink = async (id) => {
             },
             {
                 where: {
-                    id
+                    alias,
                 },
             }
         )

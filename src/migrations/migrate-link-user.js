@@ -27,19 +27,15 @@ module.exports = {
               },
         })
         await queryInterface.createTable("links", {
-            id: {
+            alias: {
                 allowNull: false,
-                autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER,
+                type: Sequelize.STRING(7),
             },
             title: {
                 type: Sequelize.STRING,
             },
             originalLink: {
-                type: Sequelize.TEXT,
-            },
-            alias: {
                 type: Sequelize.TEXT,
             },
             userId: {

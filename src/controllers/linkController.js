@@ -92,7 +92,7 @@ const updateLink = async (req, res, next) => {
             DT: data.DT || null, //data
         })
 
-        req.linkAlias = data.DT.alias || null
+        // req.linkAlias = data.DT.alias || null
         // next() //to cache middleware
     } catch (error) {
         console.log(error)
@@ -105,17 +105,14 @@ const updateLink = async (req, res, next) => {
 
 const deleteLink = async (req, res, next) => {
     try {
-        let userId = req.user.id
-        let linkId = req.params.id
-
-        let data = await linkService.deleteLink({ id: linkId, userId: userId })
+        let data = await linkService.deleteLink({ alias: req.params.slug, userId: req.user.id })
         res.status(200).json({
             EM: data.EM,
             EC: data.EC,
             DT: data.DT || null,
         })
 
-        req.linkAlias = data.DT.alias || null
+        // req.linkAlias = data.DT.alias || null
         // next() //to cache middleware
     } catch (error) {
         console.log(error)
