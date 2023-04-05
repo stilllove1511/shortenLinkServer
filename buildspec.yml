@@ -2,8 +2,7 @@ version: 0.2
 phases:
     pre_build:
         commands:
-            - sudo apt update
-            - sudo apt install nodejs
+            - yum install -y nodejs
             - npm install
     build:
         commands:
