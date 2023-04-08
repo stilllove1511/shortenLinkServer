@@ -18,6 +18,4 @@ linkRouter.delete(
     delCache
 )
 
-linkRouter.get("/redirect/:slug",shortenLinkController.redirect)
-
 export default linkRouter
