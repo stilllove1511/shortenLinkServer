@@ -11,3 +11,9 @@ phases:
         commands:
             # copy the contents of /build to S3
             # - aws s3 cp --recursive ./build s3://backend-output/
+artifacts:
+  files:
+    - '**/*'
+  name: BuildArtifact
+  discard-paths: yes
+  base-directory: 'dist/'
