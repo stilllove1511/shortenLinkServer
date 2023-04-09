@@ -13,3 +13,5 @@ COPY . .
 RUN npm run build
 
 CMD ["npm","run","production"]
+
+EXPOSE 80
