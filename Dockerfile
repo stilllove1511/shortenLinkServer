@@ -12,6 +12,6 @@ COPY . .
 
 RUN npm run build
 
-CMD ["npm","run","production"]
+CMD  /shorten-link/backend/start.sh
 
 EXPOSE 80
