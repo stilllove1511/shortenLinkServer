@@ -1,8 +1,6 @@
 import express from "express"
 import bodyParser from "body-parser"
 import initAppRoutes from "./routes/index"
-import { connectRedis } from "./redis"
-import { connectMongo } from "./mongo"
 import { configCors } from "./config/cors"
 import cookieParser from "cookie-parser"
 import session from "express-session"
@@ -38,12 +36,6 @@ passport.deserializeUser(function (user, cb) {
 configCors(app)
 
 initAppRoutes(app)
-
-// connect mongo
-// connectMongo()
-
-// connect redis
-// connectRedis()
 
 app.use((req, res) => {
     return res.send("404 not found")

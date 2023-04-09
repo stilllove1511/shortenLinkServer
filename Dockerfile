@@ -6,11 +6,15 @@ COPY package*.json ./
 
 RUN npm install
 
+RUN npm i pg
+
 RUN npm install -g @babel/core @babel/cli @babel/node @babel/preset-env
 
 COPY . .
 
 RUN npm run build
+
+RUN chmod +x /shorten-link/backend/start.sh
 
 CMD  /shorten-link/backend/start.sh
 
