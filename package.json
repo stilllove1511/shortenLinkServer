@@ -7,7 +7,7 @@
     },
     "main": "src/server.js",
     "scripts": {
-        "test": "mocha --require @babel/register ./test/*.spec.js",
+        "test": "mocha --require @babel/register ./test/*.spec.js --require ./test/mocha.env.js",
         "start": "nodemon --exec ./node_modules/.bin/babel-node ./src/server.js",
         "clean": "rm -rf build && mkdir build",
         "build-babel": "babel ./src -d ./build/src",

@@ -46,10 +46,10 @@ const handleLogin = async (req, res) => {
         }
 
         if(data.EC==0){
-            return res.status(200).json({
+            return res.status(302).json({
                 EM: data.EM,
                 EC: data.EC,
-                DT:data.DT
+                DT: data.DT,
             })
         } else {
             return res.status(401).json({
