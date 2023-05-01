@@ -12,11 +12,17 @@ const handleRegister = async (req, res) => {
 
         //service: user create
         let data = await logService.registerNewUser(req.body)
-
-        return res.status(200).json({
-            EM: data.EM,
-            EC: data.EC,
-        })
+        if(data.EC==0){
+            return res.status(200).json({
+                EM: data.EM,
+                EC: data.EC,
+            })
+        } else {
+            return res.status(400).json({
+                EM: data.EM,
+                EC: data.EC,
+            })
+        }
     } catch (e) {
         console.log(e)
         return res.status(500).json({
@@ -39,11 +45,18 @@ const handleLogin = async (req, res) => {
             })
         }
 
-        return res.status(200).json({
-            EM: data.EM, //error message
-            EC: data.EC, //error code
-            DT: data.DT, //data
-        })
+        if(data.EC==0){
+            return res.status(302).json({
+                EM: data.EM,
+                EC: data.EC,
+                DT: data.DT,
+            })
+        } else {
+            return res.status(401).json({
+                EM: data.EM,
+                EC: data.EC,
+            })
+        }
     } catch (error) {
         console.log(error)
         return res.status(500).json({

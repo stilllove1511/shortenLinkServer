@@ -9,6 +9,7 @@ const passport = require("passport")
 require("dotenv").config()
 const app = express()
 const PORT = process.env.PORT || 8080
+const env = process.env.NODE_ENV
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -38,9 +39,12 @@ configCors(app)
 initAppRoutes(app)
 
 app.use((req, res) => {
-    return res.send("404 not found")
+    return res.status(404).send("404 not found")
 })
 
 app.listen(PORT, () => {
+    console.log(`use env ${env}`)
     console.log(`Server is running on the PORT: ${PORT}`)
 })
+
+export default app
