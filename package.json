@@ -2,22 +2,18 @@
     "name": "1",
     "version": "1.0.0",
     "description": "",
-    "engines": {
-        "node": "16.x"
-    },
     "main": "src/server.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "nodemon --exec ./node_modules/.bin/babel-node ./src/server.js",
+        "test": "mocha --require @babel/register ./test/*.spec.js --require ./test/env/mocha.env.js",
+        "start": "nodemon",
         "clean": "rm -rf build && mkdir build",
-        "build-babel": "babel ./src -d ./build/src",
+        "build-babel": "babel ./src -d ./build",
         "build": "npm run clean && npm run build-babel",
-        "production": "node ./build/src/server.js"
+        "production": "node ./build/server.js"
     },
     "author": "me",
     "license": "ISC",
     "dependencies": {
-        "@babel/runtime": "^7.18.0",
         "bcryptjs": "^2.4.3",
         "body-parser": "^1.20.0",
         "cookie-parser": "^1.4.6",
@@ -26,20 +22,19 @@
         "express-session": "^1.17.3",
         "js-sha256": "^0.9.0",
         "jsonwebtoken": "^8.5.1",
-        "mongoose": "^6.9.0",
         "mysql2": "^3.2.0",
         "passport": "^0.6.0",
         "passport-google-oauth": "^2.0.0",
-        "redis": "^4.6.4",
         "sequelize": "^6.20.0"
     },
     "devDependencies": {
-        "@babel/cli": "^7.17.10",
         "@babel/core": "^7.18.0",
         "@babel/node": "^7.17.10",
-        "@babel/plugin-transform-runtime": "^7.18.0",
         "@babel/preset-env": "^7.18.0",
+        "chai": "^3.5.0",
+        "mocha": "^2.5.3",
         "nodemon": "^2.0.16",
-        "sequelize-cli": "^6.4.1"
+        "sequelize-cli": "^6.4.1",
+        "supertest": "^6.3.3"
     }
 }

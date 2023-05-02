@@ -91,7 +91,6 @@ const handelUserLogin = async (rawData) => {
         return {
             EM: "your username or password is not correct",
             EC: 1,
-            DT: "",
         }
     } catch (error) {
         console.log(error)
