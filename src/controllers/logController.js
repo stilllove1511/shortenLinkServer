@@ -13,7 +13,7 @@ const handleRegister = async (req, res) => {
         //service: user create
         let data = await logService.registerNewUser(req.body)
         if(data.EC==0){
-            return res.status(200).json({
+            return res.status(302).json({
                 EM: data.EM,
                 EC: data.EC,
             })

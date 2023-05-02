@@ -9,10 +9,6 @@ linkRouter.get("/visit/:slug", linkController.visitLink)
 linkRouter.post("/create", checkUserJWT, linkController.createLink)
 linkRouter.post("/custom-create", checkUserJWT, linkController.createCustomLink)
 linkRouter.put("/update/:alias", checkUserJWT, linkController.updateLink)
-linkRouter.delete(
-    "/delete/:slug",
-    checkUserJWT,
-    linkController.deleteLink,
-)
+linkRouter.delete("/delete/:slug", checkUserJWT, linkController.deleteLink)
 
 export default linkRouter
