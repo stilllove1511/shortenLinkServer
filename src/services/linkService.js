@@ -45,12 +45,18 @@ const linkService = {
         })
     },
 
-    getAllUserLink: async (userId) => {
+    getAllUserLink: async ({ userId, page, size }) => {
+        page = +page || 1
+        size = +size || 10
+        const offset = (page - 1) * size
+        const limit = size
         return db.Link.findAndCountAll({
             attributes: ["title", "originalLink", "alias"],
             where: {
                 userId,
             },
+            limit,
+            offset,
         })
     },
 

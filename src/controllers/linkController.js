@@ -50,8 +50,14 @@ const linkController = {
     },
 
     readLink: async (req, res) => {
+        const { page, size } = req.query
+        const userId = req.user.id
         try {
-            const response = await linkService.getAllUserLink(req.user.id)
+            const response = await linkService.getAllUserLink({
+                page,
+                size,
+                userId,
+            })
             return res.status(200).json({
                 data: response.rows,
                 total: response.count,
