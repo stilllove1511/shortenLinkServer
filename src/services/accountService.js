@@ -1,34 +1,36 @@
-import db from "../models/index";
-import bcrypt from "bcryptjs";
+import db from "../models/index"
+import passwordUtil from "../utils/password_util"
 
-const salt = bcrypt.genSaltSync(10);
+const accountService = {
+    checkUsernameExist: async (username) => {
+        const user = await db.User.findOne({
+            where: { username: username },
+        })
 
-const hashUserPassword = (userPassword) => {
-    let hashPassword = bcrypt.hashSync(userPassword, salt);
-    return hashPassword;
-};
-
-const updatePassword = async (userData) => {
-    let hashPassword = hashUserPassword(userData.password);
-
-    try {
-        await db.User.update(
-            { password: hashPassword },
+        if (user) {
+            return true
+        }
+        return false
+    },
+    createUser: async ({ username, password }) => {
+        return db.User.create({
+            username,
+            password: passwordUtil.hash(password),
+        })
+    },
+    updatePassword: async ({ userId, newPassword }) => {
+        return db.User.update(
+            { password: newPassword },
             {
-                where: { id: userData.userId },
+                where: { id: userId },
             }
-        );
-        return {
-            EM: "update password successfully!",
-            EC: 0,
-        };
-    } catch (error) {
-        console.log(error);
-        return {
-            EM: "something wrongs in service...",
-            EC: -2,
-        };
-    }
-};
+        )
+    },
+    findOneUserByUsername: async (username) => {
+        return db.User.findOne({
+            where: { username },
+        })
+    },
+}
 
-export default { updatePassword };
+export default accountService

@@ -4,10 +4,14 @@ import linkController from "../controllers/linkController"
 
 const linkRouter = express.Router()
 
-linkRouter.get("/", checkUserJWT, linkController.readLink)
-linkRouter.get("/visit/:slug", linkController.visitLink)
+linkRouter.get(
+    "/get_link_by_alias/:alias",
+    checkUserJWT,
+    linkController.getLinkByAlias
+)
+linkRouter.get("/get_user_link", checkUserJWT, linkController.readLink)
 linkRouter.post("/create", checkUserJWT, linkController.createLink)
-linkRouter.post("/custom-create", checkUserJWT, linkController.createCustomLink)
+linkRouter.post("/custom_create", checkUserJWT, linkController.createCustomLink)
 linkRouter.put("/update/:alias", checkUserJWT, linkController.updateLink)
 linkRouter.delete("/delete/:slug", checkUserJWT, linkController.deleteLink)
 
