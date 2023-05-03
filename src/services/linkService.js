@@ -76,7 +76,7 @@ const linkService = {
         return link.destroy()
     },
 
-    checkAuthorizedLink: async ({ linkAlias: alias, userId }) => {
+    checkAuthorizedLink: async ({ alias, userId }) => {
         return db.Link.findOne({
             where: {
                 alias,

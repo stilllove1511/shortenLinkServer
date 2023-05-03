@@ -75,7 +75,7 @@ const linkController = {
     getLinkByAlias: async (req, res) => {
         try {
             const link = await linkService.checkAuthorizedLink({
-                linkAlias: req.params.alias,
+                alias: req.params.alias,
                 userId: req.user.id,
             })
             if (!link) {
@@ -98,7 +98,8 @@ const linkController = {
     },
 
     updateLink: async (req, res) => {
-        const { originalLink, title, alias } = req.body
+        const { alias } = req.params
+        const { originalLink, title } = req.body
         try {
             await linkService.updateLink({
                 originalLink,
@@ -144,6 +145,7 @@ const linkController = {
                 message: "ok",
             })
         } catch (error) {
+            // console.log(error)
             return res.status(500).json({
                 code: 1,
                 message: "some thing wrong :(",
