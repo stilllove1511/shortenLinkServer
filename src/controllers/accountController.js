@@ -29,3 +29,4 @@ const getUserInfor = (req, res) => {
 }
 
 export default { updatePassword, getUserInfor }
+const a = 1;
